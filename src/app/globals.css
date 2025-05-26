@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --color-background: #ffffff;
+  --color-foreground: #171717;
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #444444;
+    --foreground: #bababa;
+    --color-background: #444444;
+    --color-foreground: #bababa;
+  }
+}
+
+body {
+  @apply text-[15px] leading-relaxed;
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+input,
+textarea,
+select {
+  color: #2b2b2b;
+  background-color: #fff;
+  font-size: 15px;
+}
+
+::placeholder {
+  color: #a3a3a3;
+}
