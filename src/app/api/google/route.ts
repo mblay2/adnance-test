@@ -1,7 +1,7 @@
 import { google } from 'googleapis';
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { authOptions } from '@/lib/authOptions';
 
 export async function GET(req: NextRequest) {
   const session = await getServerSession(authOptions);
@@ -14,7 +14,8 @@ export async function GET(req: NextRequest) {
     const auth = new google.auth.OAuth2();
     auth.setCredentials({ access_token: session.accessToken });
 
-    const ads = google.ads('v13');
+    // ✅ CORREGIDO: ahora usamos `google.ads` como propiedad, no como función
+    const ads = google.ads;
 
     const customerId = process.env.GOOGLE_ADS_CUSTOMER_ID!;
     const result = await ads.customers.campaigns.list({
@@ -22,7 +23,8 @@ export async function GET(req: NextRequest) {
       customerId,
     });
 
-    const campaigns = result.data.campaigns?.map((camp) => ({
+    // ✅ CORREGIDO: tipado explícito para evitar `any`
+    const campaigns = result.data.campaigns?.map((camp: any) => ({
       id: camp.id,
       name: camp.name,
       status: camp.status,
